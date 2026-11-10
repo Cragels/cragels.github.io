@@ -1,0 +1,540 @@
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+:root {
+  --grey-bg: #4a4a4a;
+  --wood-bg: #8a4b1c;
+  --wood-dark: #6b3612;
+  --plank: rgba(90, 45, 12, 0.55);
+  --text-light: #f2f2f2;
+  --text-dark: #1a0f06;
+
+  /* Size of each repeated background tile.
+     Smaller number = more repeats = less zoomed in.
+     Use "auto" to show the image at its real pixel size. */
+  --tile-size: 650px;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text-light);
+  background:
+    url("images/bg-grey.jpg") top left / var(--tile-size) auto repeat,
+    radial-gradient(circle at 30% 20%, #6a6a6a, #3a3a3a 70%);
+  background-color: var(--grey-bg);
+  background-attachment: fixed; /* same locked grey as the sections, so rounded corners blend in */
+  line-height: 1.6;
+}
+
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ---------- Backgrounds (drop your own files in /images) ---------- */
+.hero, .grey, .panel-section {
+  background:
+    url("images/bg-grey.jpg") top left / var(--tile-size) auto repeat,
+    radial-gradient(circle at 30% 20%, #6a6a6a, #3a3a3a 70%);
+  background-color: var(--grey-bg);
+  /* Locked in place: the wood sections scroll over the top of it */
+  background-attachment: fixed;
+}
+
+.wood {
+  background:
+    url("images/bg-wood.jpg") top left / var(--tile-size) auto repeat,
+    repeating-linear-gradient(90deg, #8f4f1f 0 6px, #7f4318 6px 11px, #94541f 11px 20px);
+  background-color: var(--wood-bg);
+  border-top: 4px solid var(--wood-dark);
+  border-bottom: 4px solid var(--wood-dark);
+  color: var(--text-dark);
+}
+
+/* Rounded top corners on the full-width wood sections (Contact, Art, Game Projects, Code) */
+.wood:not(.wood-panel) { border-radius: 14px 14px 0 0; }
+
+/* ---------- Jump to top ---------- */
+.jump-top {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(60, 60, 60, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  transition: background 0.2s;
+}
+.jump-top:hover { background: rgba(20, 20, 20, 0.95); }
+
+/* ---------- Hero ---------- */
+.hero { padding: 110px 24px; }
+
+.hero-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.profile {
+  width: 320px;
+  height: auto;
+  aspect-ratio: 1 / 1; /* square */
+  object-fit: cover;
+  background: #c4c4c4;
+  border: 4px solid #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  flex-shrink: 0;
+}
+
+.hero-text { flex: 1; text-align: center; }
+.hero-text h1 { font-size: 4.8rem; line-height: 1.1; text-shadow: 0 2px 6px rgba(0,0,0,.5); } /* 2x (was 2.4rem) */
+.hero-text h2 { font-size: 1.8rem; font-weight: 600; margin: 18px 0 22px; } /* 1.5x (was 1.4rem) */
+
+nav { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+.btn {
+  padding: 7px 17px;   /* 1.2x (was 6px 14px) */
+  font-size: 0.9rem;   /* 1.2x (was 0.75rem) */
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: rgba(60, 60, 60, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn:hover, .btn.active { background: #e8e8e8; color: #222; }
+/* Download CV: light by default, and on hover it fades to the normal dark button colour */
+.btn.active:hover {
+  background: rgba(60, 60, 60, 0.7);
+  color: #fff;
+}
+
+/* ---------- Wood panel (Portfolio) ---------- */
+.panel-section { padding: 50px 0; }
+.wood.wood-panel {
+  max-width: none;
+  margin: 0;
+  padding: 40px 34px 44px;
+  border: 4px solid var(--wood-dark);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- Wood sections ---------- */
+.wood { padding: 40px 24px 50px; }
+.wood > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+
+.plank {
+  background: var(--plank);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  font-weight: 700;
+}
+
+.plank.title { font-size: 1.8rem; padding: 12px; margin-bottom: 24px; color: #fff; }
+
+/* Drop shadow on the white Portfolio / Art / Game Projects text */
+.plank.title {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+.plank.subtitle { font-size: 1.05rem; padding: 8px; margin: 22px auto 16px; }
+
+/* Make sure every heading on the wood sections is centred */
+.wood h2, .wood h3 { display: block; width: 100%; text-align: center; }
+
+/* Project cards on the Code page get the same indented look */
+.project {
+  background: var(--plank) !important;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.grid-2, .grid-3 { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+.tile {
+  display: block;
+  text-decoration: none;
+  color: var(--text-dark);
+}
+.tile img {
+  width: 100%;
+  aspect-ratio: 1 / 0.75;
+  object-fit: cover;
+  background: #3a3a3a;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.tile:hover img { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,.5); }
+
+/* Portfolio labels: the normal button look, just bigger (no underline, no text shadow; keeps the normal button outline) */
+.tile .label {
+  display: block;
+  margin-top: 10px;
+  padding: 14px 20px;
+  font-size: 1.5rem;
+  text-align: center;
+  text-decoration: none;
+  text-shadow: none;
+}
+.tile:hover .label { background: #e8e8e8; color: #222; }
+
+.tile.jam img { aspect-ratio: 1 / 1.1; background: #111; }
+
+/* ---------- About ---------- */
+.grey { padding: 50px 24px 60px; text-align: center; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); }
+.grey > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+
+.section-title { font-size: 2.2rem; margin-bottom: 18px; }
+.section-title.dark { color: var(--text-dark); font-size: 1.8rem; }
+
+.logo { width: 220px; margin: 0 auto 8px; }
+
+/* Skills across the full width, then education (left) | paragraphs (right) */
+.grey > .about-panel {
+  max-width: 980px;
+  padding: 40px 34px 44px;
+  background: rgba(30, 30, 30, 0.6);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.about-panel > * { max-width: 760px; margin-left: auto; margin-right: auto; }
+.about-panel > .about-split, .about-panel > .about-skills { max-width: 900px; }
+.about-skills { margin-top: 30px; text-align: center; }
+.about-skills h3 { margin-top: 0 !important; margin-bottom: 16px !important; }
+.about-skills .tags { justify-content: center; }
+.about-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-top: 36px;
+  margin-bottom: 30px;
+}
+.about-col { min-width: 0; }
+.about-col h3 { margin-top: 0 !important; margin-bottom: 16px !important; }
+.about-col .tags { justify-content: center; }
+.about-col .degree { margin-bottom: 0; font-size: 1rem; }
+.about-text { text-align: center; }
+.about-text h3 { text-align: center !important; margin-top: 22px !important; margin-bottom: 8px !important; }
+.about-text > p:first-child { margin-top: 0; }
+.grey .intro { font-size: 1.15rem; }
+.degree { font-weight: 700; font-size: 1.1rem; margin-bottom: 30px; }
+
+.grey h3 { font-size: 1.35rem; margin: 26px auto 8px; text-align: center; }
+.grey p { font-size: 1.05rem; margin-bottom: 14px; }
+
+.skills { list-style: none; font-size: 1.05rem; margin-bottom: 16px; }
+.skills li::before { content: "\2022\00a0\00a0"; }
+
+/* ---------- Contact ---------- */
+.contact-box {
+  background: var(--plank);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  padding: 24px 20px 30px;
+  text-align: center;
+}
+.contact-box .section-title { text-align: center; width: 100%; margin-bottom: 10px; color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8); }
+.contact-note { margin: 0 0 22px; font-size: 1rem; font-weight: 600; color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8); }
+/* Contact links are normal site buttons in one horizontal line (they wrap on small screens) */
+.contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.contact-links .btn { font-size: 1rem; padding: 9px 22px; text-shadow: none; }
+.video-link { margin: -24px auto 36px; font-size: 0.85rem; text-align: center; }
+.video-link a { color: #fff; text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8); }
+
+/* ---------- Sub pages (Art / Code) ---------- */
+.subpage-header {
+  padding: 50px 24px 30px;
+  text-align: center;
+}
+.subpage-header h1 { font-size: 2.4rem; text-shadow: 0 2px 6px rgba(0,0,0,.5); }
+.subpage-header p { max-width: 640px; margin: 12px auto 20px; font-size: 0.9rem; }
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.gallery figure { margin: 0; }
+.gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #3a3a3a;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+}
+.gallery figcaption {
+  margin-top: 6px;
+  padding: 4px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-align: center;
+  background: var(--plank);
+  border-radius: 8px;
+  color: #fff;
+}
+
+.gallery.four { grid-template-columns: repeat(2, 1fr); }
+
+/* Art Skills: heading and tags share one wood plank, like the Contact Me box */
+.tags.centered { justify-content: center; }
+.skills-box {
+  background: var(--plank);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  padding: 20px 20px 28px;
+  text-align: center;
+}
+.skills-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+}
+.gallery img { cursor: zoom-in; }
+
+/* Embedded video, 16:9 and fills the width */
+.video {
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  border: 3px solid rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  margin-bottom: 40px;
+}
+.video iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+/* Click-to-enlarge viewer */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.85);
+  cursor: zoom-out;
+}
+.lightbox[hidden] { display: none; }
+.lightbox figure { margin: 0; text-align: center; max-width: 100%; }
+.lightbox img {
+  max-width: 100%;
+  max-height: 82vh;
+  border-radius: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  cursor: default;
+}
+.lightbox figcaption { margin-top: 12px; color: #fff; font-weight: 700; text-shadow: 0 2px 6px #000; }
+.lightbox-close {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: #fff;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-shadow: 0 2px 6px #000;
+}
+body.no-scroll { overflow: hidden; }
+
+.projects { display: flex; flex-direction: column; gap: 18px; }
+.project {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  background: rgba(60, 30, 8, 0.4);
+  border-radius: 12px;
+  padding: 16px;
+  color: #fff;
+}
+.project img {
+  width: 220px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #3a3a3a;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.project h3 { font-size: 1.2rem; margin-bottom: 4px; }
+.project .tech { font-size: 0.75rem; opacity: 0.8; margin-bottom: 8px; }
+.project p { font-size: 0.85rem; margin-bottom: 8px; }
+.project a { font-weight: 700; color: #ffd9a8; }
+
+.back-link { display: inline-block; text-decoration: none; }
+
+@media (max-width: 700px) {
+  .project { flex-direction: column; text-align: center; }
+  .project img { width: 100%; }
+}
+
+/* ---------- Disclaimer strip ---------- */
+.disclaimer {
+  background: #2e2e2e;
+  padding: 10px 24px;
+  text-align: center;
+}
+.disclaimer p {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: #cfcfcf;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 700px) {
+  .hero-inner { flex-direction: column; gap: 30px; }
+  .profile { order: -1; } /* keep photo above the text on phones */
+  .hero-text h1 { font-size: 3.2rem; } /* shrink a little so the name fits small screens */
+  .hero-text h2 { font-size: 1.4rem; }
+  .hero { padding: 80px 24px; }
+  .profile { width: 100%; max-width: 320px; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .about-split { grid-template-columns: 1fr; gap: 30px; }
+  .wood.wood-panel { padding: 28px 14px 32px; }
+  .grey > .about-panel { padding: 30px 16px 34px; }
+}
+
+/* ---------- Games page ---------- */
+.games-list { display: flex; flex-direction: column; gap: 18px; }
+
+.game-card {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 16px;
+  text-decoration: none;
+  color: #fff;
+  background: var(--plank);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s, background 0.2s;
+}
+.game-card:hover { transform: translateY(-3px); background: rgba(90, 45, 12, 0.75); }
+
+.game-card img {
+  width: 260px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  background: #3a3a3a;
+  border-radius: 8px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  flex-shrink: 0;
+}
+.game-card h3 { font-size: 1.4rem; margin-bottom: 2px; }
+.game-card .tech { font-size: 0.8rem; opacity: 0.8; margin-bottom: 8px; }
+.game-card p { font-size: 1rem; margin-bottom: 10px; }
+.game-card .more { font-weight: 700; color: #ffd9a8; }
+
+/* ---------- Single game page ---------- */
+.game-banner {
+  width: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  background: #3a3a3a;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  margin-bottom: 22px;
+}
+
+.game-detail {
+  background: var(--plank);
+  border-radius: 10px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
+  padding: 24px 26px;
+  margin-bottom: 8px;
+  color: #fff;
+}
+.wood .game-detail h2 { text-align: left; font-size: 1.3rem; margin: 18px 0 6px; }
+.game-detail h2:first-child { margin-top: 0; }
+.wood .game-detail h2.game-name { text-align: left; font-size: 2rem; margin: 0 0 6px; }
+
+/* Two columns: cover + details on the left, title + text on the right */
+.game-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.game-left, .game-right { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.game-left .game-banner { margin-bottom: 0; aspect-ratio: 630 / 500; max-height: none; display: block; }
+/* The cover is a link to the game, same as the Play button */
+.game-cover { display: block;  max-width: 380px}
+.game-cover .game-banner { transition: filter 0.2s ease, transform 0.2s ease; }
+.game-cover:hover .game-banner { filter: brightness(1.12); transform: translateY(-2px); }
+.game-detail .game-right .play { margin-top: 4px; text-align: left; }
+.game-worked h2 { margin-top: 0 !important; }
+
+/* Tool tabs under the cover */
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag {
+  padding: 7px 17px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #222;
+  background: #e8e8e8;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  text-shadow: none;
+}
+
+/* Jam name and team under the title */
+.game-right .game-jam { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.04em; margin: -10px 0 0; }
+.game-right .game-team { font-size: 0.9rem; opacity: 0.85; margin: -12px 0 0; }
+.game-detail p { font-size: 1rem; }
+.game-detail .play { margin-top: 22px; text-align: center; }
+.btn.big { font-size: 0.95rem; padding: 10px 22px; }
+/* Play on itch.io buttons: no drop shadow on the text */
+.game-detail .btn, .game-detail .btn.big { text-shadow: none; }
+
+@media (max-width: 700px) {
+  .game-card { flex-direction: column; text-align: center; }
+  .game-card img { width: 100%; }
+
+  /* Phones: single column: title, jam, team, cover, tabs, about, worked on, play */
+  .game-layout { display: flex; flex-direction: column; gap: 18px; }
+  .game-left, .game-right { display: contents; }
+  .game-name { order: 1; }
+  .game-jam { order: 2; }
+  .game-team { order: 3; }
+  .game-cover { order: 4; }
+  .tags { order: 5; }
+  .game-about { order: 6; }
+  .game-worked { order: 7; }
+  .game-detail .game-right .play { order: 8; text-align: left; }
+}
+
+/* ---------- Drop shadow on text for the other pages ---------- */
+.subpage-header p,
+.gallery figcaption,
+.game-detail,
+.project {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
